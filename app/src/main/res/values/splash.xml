@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.DigiDraw.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/mineral_green</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_digidraw</item>
+        <item name="postSplashScreenTheme">@style/Theme.DigiDraw</item>
+    </style>
+</resources>
