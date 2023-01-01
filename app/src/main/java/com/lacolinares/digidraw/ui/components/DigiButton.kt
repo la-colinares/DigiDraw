@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -16,6 +18,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lacolinares.digidraw.ui.theme.OuterSpace
+import com.lacolinares.digidraw.util.bounceClick
 
 
 internal class DigiButtonPreviewParam : PreviewParameterProvider<String> {
@@ -27,25 +30,53 @@ internal class DigiButtonPreviewParam : PreviewParameterProvider<String> {
 @Composable
 fun DigiButton(
     @PreviewParameter(DigiButtonPreviewParam::class) text: String,
-    fontSize: TextUnit = 12.sp,
+    fontSize: TextUnit = 18.sp,
     textAlign: TextAlign = TextAlign.Center,
     minWidth: Int = 220,
+    onClick: () -> Unit = {},
 ) {
-    Card(
+    Button(
+        onClick = { onClick.invoke() },
         shape = RoundedCornerShape(50.dp),
-        elevation = 16.dp,
         modifier = Modifier
             .wrapContentHeight()
-            .wrapContentWidth(),
-        backgroundColor = OuterSpace
+            .wrapContentWidth()
+            .shadow(
+                elevation = 16.dp,
+                shape = RoundedCornerShape(50.dp)
+            )
+            .bounceClick(),
+        colors = ButtonDefaults.buttonColors(backgroundColor = OuterSpace)
     ) {
         DigiText(
             text = text,
             fontSize = fontSize,
             modifier = Modifier
-                .padding(horizontal = 40.dp, vertical = 12.dp)
+                .padding(horizontal = 40.dp, vertical = 20.dp)
                 .defaultMinSize(minWidth = minWidth.dp),
             textAlign = textAlign
         )
     }
+//    Card(
+//        shape = RoundedCornerShape(50.dp),
+//        elevation = 16.dp,
+//        modifier = Modifier
+//            .wrapContentHeight()
+//            .wrapContentWidth()
+//            .clickable(
+//                interactionSource = remember(::MutableInteractionSource),
+//                indication = rememberRipple(bounded = true),
+//                onClick = { onClick.invoke() }
+//            ),
+//        backgroundColor = OuterSpace
+//    ) {
+//        DigiText(
+//            text = text,
+//            fontSize = fontSize,
+//            modifier = Modifier
+//                .padding(horizontal = 40.dp, vertical = 20.dp)
+//                .defaultMinSize(minWidth = minWidth.dp),
+//            textAlign = textAlign
+//        )
+//    }
 }
