@@ -57,26 +57,4 @@ fun DigiButton(
             textAlign = textAlign
         )
     }
-//    Card(
-//        shape = RoundedCornerShape(50.dp),
-//        elevation = 16.dp,
-//        modifier = Modifier
-//            .wrapContentHeight()
-//            .wrapContentWidth()
-//            .clickable(
-//                interactionSource = remember(::MutableInteractionSource),
-//                indication = rememberRipple(bounded = true),
-//                onClick = { onClick.invoke() }
-//            ),
-//        backgroundColor = OuterSpace
-//    ) {
-//        DigiText(
-//            text = text,
-//            fontSize = fontSize,
-//            modifier = Modifier
-//                .padding(horizontal = 40.dp, vertical = 20.dp)
-//                .defaultMinSize(minWidth = minWidth.dp),
-//            textAlign = textAlign
-//        )
-//    }
 }
