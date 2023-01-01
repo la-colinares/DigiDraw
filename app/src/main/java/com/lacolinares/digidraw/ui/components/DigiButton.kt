@@ -1,14 +1,13 @@
 package com.lacolinares.digidraw.ui.components
 
-import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -25,14 +24,15 @@ internal class DigiButtonPreviewParam: PreviewParameterProvider<String> {
 
 @Preview(showBackground = true, backgroundColor = 0xFF455B56)
 @Composable
-fun DigiButton(@PreviewParameter(DigiButtonPreviewParam::class) text: String, fontSize: TextUnit = 12.sp){
+fun DigiButton(
+    @PreviewParameter(DigiButtonPreviewParam::class) text: String,
+    fontSize: TextUnit = 12.sp,
+    textAlign: TextAlign = TextAlign.Center
+){
     Card(
         shape = RoundedCornerShape(50.dp),
         elevation = 16.dp,
-        modifier = Modifier
-            .defaultMinSize(minWidth = 200.dp)
-            .wrapContentWidth(align = Alignment.CenterHorizontally)
-            .wrapContentHeight(),
+        modifier = Modifier.wrapContentHeight(),
         backgroundColor = OuterSpace
     ) {
         DigiText(
@@ -42,7 +42,8 @@ fun DigiButton(@PreviewParameter(DigiButtonPreviewParam::class) text: String, fo
                 .padding(
                     horizontal = 40.dp,
                     vertical = 8.dp
-                )
+                ).fillMaxWidth(),
+            textAlign = textAlign
         )
     }
 }
