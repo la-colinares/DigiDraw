@@ -13,7 +13,9 @@ import com.lacolinares.digidraw.R
 import com.lacolinares.digidraw.ui.components.DigiButton
 import com.lacolinares.digidraw.ui.components.DigiText
 import com.lacolinares.digidraw.ui.theme.MineralGreen
+import com.ramcosta.composedestinations.annotation.Destination
 
+@Destination(start = true)
 @Composable
 fun MainScreen() {
     val buttonWidth = 120

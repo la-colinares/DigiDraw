@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp' version '1.7.21-1.0.8'
 }
 
 android {
@@ -51,6 +52,14 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
+    applicationVariants.all { variant ->
+        kotlin.sourceSets {
+            getByName(variant.name) {
+                kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -67,6 +76,11 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+
     //Splash API
     implementation 'androidx.core:core-splashscreen:1.0.0'
+
+    //Compose Destination Library
+    implementation 'io.github.raamcosta.compose-destinations:core:1.4.0-beta'
+    ksp 'io.github.raamcosta.compose-destinations:ksp:1.4.0-beta'
 }
