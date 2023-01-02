@@ -21,7 +21,9 @@ import com.ramcosta.composedestinations.spec.DestinationStyle
 
 object DigiModalStyle: DestinationStyle.Dialog{
     override val properties: DialogProperties
-        get() = DialogProperties()
+        get() = DialogProperties(
+            dismissOnClickOutside = false
+        )
 }
 
 @Destination(style = DigiModalStyle::class)

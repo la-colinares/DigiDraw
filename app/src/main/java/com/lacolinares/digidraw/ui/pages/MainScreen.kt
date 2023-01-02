@@ -7,13 +7,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lacolinares.digidraw.R
 import com.lacolinares.digidraw.ui.components.DigiButton
 import com.lacolinares.digidraw.ui.components.DigiText
 import com.lacolinares.digidraw.ui.destinations.DigiModalDestination
+import com.lacolinares.digidraw.ui.destinations.QuizScreenDestination
 import com.lacolinares.digidraw.ui.theme.MineralGreen
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -41,8 +41,17 @@ fun MainScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
-                DigiButton(text = stringResource(R.string.start_text), minWidth = buttonWidth)
-                DigiButton(text = stringResource(R.string.history_text), minWidth = buttonWidth)
+                DigiButton(
+                    text = stringResource(R.string.start_text),
+                    minWidth = buttonWidth,
+                    onClick = {
+                        navigator.navigate(QuizScreenDestination)
+                    }
+                )
+                DigiButton(
+                    text = stringResource(R.string.history_text),
+                    minWidth = buttonWidth,
+                )
                 DigiButton(
                     text = stringResource(R.string.how_to_play_text),
                     minWidth = buttonWidth,
@@ -70,10 +79,4 @@ fun MainScreen(
             }
         }
     }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun MainPreview() {
-    //MainScreen()
 }

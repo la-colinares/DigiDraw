@@ -34,6 +34,7 @@ fun DigiButton(
     textAlign: TextAlign = TextAlign.Center,
     minWidth: Int = 220,
     verticalPadding: Int = 20,
+    horizontalPadding: Int = 40,
     onClick: () -> Unit = {},
 ) {
     Button(
@@ -53,7 +54,7 @@ fun DigiButton(
             text = text,
             fontSize = fontSize,
             modifier = Modifier
-                .padding(horizontal = 40.dp, vertical = verticalPadding.dp)
+                .padding(horizontal = horizontalPadding.dp, vertical = verticalPadding.dp)
                 .defaultMinSize(minWidth = minWidth.dp),
             textAlign = textAlign
         )
