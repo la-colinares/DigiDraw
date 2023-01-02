@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.devtools.ksp' version '1.7.21-1.0.8'
+    id 'kotlinx-serialization'
 }
 
 android {
@@ -87,4 +88,10 @@ dependencies {
     // PyTorch Android (Tensor/ML)
     implementation 'org.pytorch:pytorch_android_lite:1.10.0'
     implementation 'org.pytorch:pytorch_android_torchvision_lite:1.10.0'
+
+    //Prefs Data Store
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    //Kotlin Json Serialization
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
 }

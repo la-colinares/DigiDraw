@@ -21,6 +21,8 @@ import com.lacolinares.digidraw.ui.components.DigiButton
 import com.lacolinares.digidraw.ui.components.DigiSpace
 import com.lacolinares.digidraw.ui.components.DigiText
 import com.lacolinares.digidraw.ui.destinations.DigiModalDestination
+import com.lacolinares.digidraw.ui.pages.history.HistoryDataStore
+import com.lacolinares.digidraw.ui.pages.history.HistoryModel
 import com.lacolinares.digidraw.ui.theme.MineralGreen
 import com.lacolinares.digidraw.ui.theme.OuterSpace
 import com.lacolinares.digidraw.util.FileHelper
@@ -127,6 +129,7 @@ private fun DrawingArea(
 ) {
     val context = LocalContext.current
     val composableScope = rememberCoroutineScope()
+    val historyDataStore = HistoryDataStore(context)
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -163,6 +166,9 @@ private fun DrawingArea(
                             onFinish = { score, total ->
                                 it.clearAllPointsAndRedraw()
                                 onSubmitAnswer.invoke()
+                                composableScope.launch {
+                                    historyDataStore.setHistory(HistoryModel(score = score, totalQuestion = total))
+                                }
                                 navigator.navigate(
                                     DigiModalDestination(
                                         title = context.getString(R.string.game_over_text),

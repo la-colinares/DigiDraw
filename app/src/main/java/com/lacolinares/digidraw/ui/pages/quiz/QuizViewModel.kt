@@ -104,7 +104,7 @@ class QuizViewModel : ViewModel() {
         )
     }
 
-    private fun clearQuiz(){
+    private fun clearQuiz() {
         correctAnswerCount = 0
         questionPos = 0
         activeQuestion.update { "" }
@@ -117,12 +117,9 @@ class QuizViewModel : ViewModel() {
     }
 
     private fun loadQuestions(): List<QuizModel> {
-        return listOf(
-            QuizModel(question = "1 + 1", correctAnswer = "2"),
-            QuizModel(question = "2 + 1", correctAnswer = "3"),
-            QuizModel(question = "4 + 3", correctAnswer = "7"),
-            QuizModel(question = "2 + 3", correctAnswer = "5"),
-        )
+        return (1..4).map {
+            QuizModel(question = "$it + $it", correctAnswer = "${it + it}")
+        }
     }
 
     companion object {
