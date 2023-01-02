@@ -9,8 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.lacolinares.digidraw.ui.pages.MainScreen
-import com.lacolinares.digidraw.ui.pages.NavGraphs
+import com.lacolinares.digidraw.ui.NavGraphs
 import com.lacolinares.digidraw.ui.theme.DigiDrawTheme
 import com.lacolinares.digidraw.ui.theme.MineralGreen
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -34,5 +33,5 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    MainScreen()
+    //MainScreen()
 }

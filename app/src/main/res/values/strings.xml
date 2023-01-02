@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">DigiDraw</string>
+    <string name="close_text">Close</string>
+    <string name="start_text">Start</string>
+    <string name="history_text">History</string>
+    <string name="how_to_play_text">How To Play</string>
+    <string name="how_to_play_description_text">Draw your answer to the question and submit.</string>
+    <string name="about_text">About</string>
+    <string name="about_description_text">This app was developed using kotlin and pytorch.</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -12,13 +13,18 @@ import androidx.compose.ui.unit.sp
 import com.lacolinares.digidraw.R
 import com.lacolinares.digidraw.ui.components.DigiButton
 import com.lacolinares.digidraw.ui.components.DigiText
+import com.lacolinares.digidraw.ui.destinations.DigiModalDestination
 import com.lacolinares.digidraw.ui.theme.MineralGreen
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination(start = true)
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    navigator: DestinationsNavigator,
+) {
     val buttonWidth = 120
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,10 +41,32 @@ fun MainScreen() {
             modifier = Modifier.fillMaxSize()
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
-                DigiButton(text = "Start", minWidth = buttonWidth)
-                DigiButton(text = "History", minWidth = buttonWidth)
-                DigiButton(text = "How To Play", minWidth = buttonWidth)
-                DigiButton(text = "About", minWidth = buttonWidth)
+                DigiButton(text = stringResource(R.string.start_text), minWidth = buttonWidth)
+                DigiButton(text = stringResource(R.string.history_text), minWidth = buttonWidth)
+                DigiButton(
+                    text = stringResource(R.string.how_to_play_text),
+                    minWidth = buttonWidth,
+                    onClick = {
+                        navigator.navigate(
+                            DigiModalDestination(
+                                title = context.getString(R.string.how_to_play_text),
+                                message = context.getString(R.string.how_to_play_description_text)
+                            )
+                        )
+                    }
+                )
+                DigiButton(
+                    text = stringResource(R.string.about_text),
+                    minWidth = buttonWidth,
+                    onClick = {
+                        navigator.navigate(
+                            DigiModalDestination(
+                                title = context.getString(R.string.about_text),
+                                message = context.getString(R.string.about_description_text)
+                            )
+                        )
+                    }
+                )
             }
         }
     }
@@ -47,5 +75,5 @@ fun MainScreen() {
 @Preview(showSystemUi = true)
 @Composable
 fun MainPreview() {
-    MainScreen()
+    //MainScreen()
 }
