@@ -7,4 +7,10 @@
     <string name="how_to_play_description_text">Draw your answer to the question and submit.</string>
     <string name="about_text">About</string>
     <string name="about_description_text">This app was developed using kotlin and pytorch.</string>
+    <string name="game_over_text">Game Over</string>
+    <string name="submit_text">Submit</string>
+    <string name="clear_text">Clear</string>
+    <string name="instruction_text">draw the answer below the question.</string>
+    <string name="cross_text">X</string>
+    <string name="your_score_text">Your score:\n%1$d/%2$d</string>
 </resources>

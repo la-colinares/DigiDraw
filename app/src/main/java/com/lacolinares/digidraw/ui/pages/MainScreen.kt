@@ -1,7 +1,10 @@
 package com.lacolinares.digidraw.ui.pages
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lacolinares.digidraw.R
 import com.lacolinares.digidraw.ui.components.DigiButton
+import com.lacolinares.digidraw.ui.components.DigiSpace
 import com.lacolinares.digidraw.ui.components.DigiText
 import com.lacolinares.digidraw.ui.destinations.DigiModalDestination
 import com.lacolinares.digidraw.ui.destinations.QuizScreenDestination
@@ -31,7 +35,7 @@ fun MainScreen(
             .background(MineralGreen),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
+        DigiSpace(height = 40)
         DigiText(
             text = stringResource(id = R.string.app_name),
             fontSize = 48.sp
@@ -42,18 +46,16 @@ fun MainScreen(
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
                 DigiButton(
-                    text = stringResource(R.string.start_text),
+                    text = stringResource(id = R.string.start_text),
                     minWidth = buttonWidth,
-                    onClick = {
-                        navigator.navigate(QuizScreenDestination)
-                    }
+                    onClick = { navigator.navigate(QuizScreenDestination) }
                 )
                 DigiButton(
-                    text = stringResource(R.string.history_text),
+                    text = stringResource(id = R.string.history_text),
                     minWidth = buttonWidth,
                 )
                 DigiButton(
-                    text = stringResource(R.string.how_to_play_text),
+                    text = stringResource(id = R.string.how_to_play_text),
                     minWidth = buttonWidth,
                     onClick = {
                         navigator.navigate(
@@ -65,7 +67,7 @@ fun MainScreen(
                     }
                 )
                 DigiButton(
-                    text = stringResource(R.string.about_text),
+                    text = stringResource(id = R.string.about_text),
                     minWidth = buttonWidth,
                     onClick = {
                         navigator.navigate(

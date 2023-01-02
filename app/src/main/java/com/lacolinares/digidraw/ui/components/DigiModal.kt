@@ -16,7 +16,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.lacolinares.digidraw.R
 import com.lacolinares.digidraw.ui.theme.MineralGreen
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.ResultBackNavigator
 import com.ramcosta.composedestinations.spec.DestinationStyle
 
 object DigiModalStyle: DestinationStyle.Dialog{
@@ -29,9 +29,9 @@ object DigiModalStyle: DestinationStyle.Dialog{
 @Destination(style = DigiModalStyle::class)
 @Composable
 fun DigiModal(
-    navigator: DestinationsNavigator,
+    resultNavigator: ResultBackNavigator<Boolean>,
     title: String,
-    message: String
+    message: String,
 ) {
     Card(
         modifier = Modifier.wrapContentHeight(),
@@ -50,9 +50,7 @@ fun DigiModal(
             DigiButton(
                 text = stringResource(R.string.close_text),
                 verticalPadding = 8,
-                onClick = {
-                    navigator.popBackStack()
-                }
+                onClick = { resultNavigator.navigateBack(true) }
             )
         }
     }

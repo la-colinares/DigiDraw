@@ -25,7 +25,7 @@ class HandWrittenDigitView(context: Context) : View(context) {
         mPaint = Paint().apply {
             color = Color.WHITE
             isAntiAlias = true
-            strokeWidth = 24f
+            strokeWidth = 32f
             style = Paint.Style.STROKE
             strokeJoin = Paint.Join.ROUND
         }

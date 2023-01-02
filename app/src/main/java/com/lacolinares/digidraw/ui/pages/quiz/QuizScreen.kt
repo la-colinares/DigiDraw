@@ -9,68 +9,79 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.lacolinares.digidraw.R
 import com.lacolinares.digidraw.ui.components.DigiButton
 import com.lacolinares.digidraw.ui.components.DigiSpace
 import com.lacolinares.digidraw.ui.components.DigiText
+import com.lacolinares.digidraw.ui.destinations.DigiModalDestination
 import com.lacolinares.digidraw.ui.theme.MineralGreen
 import com.lacolinares.digidraw.ui.theme.OuterSpace
+import com.lacolinares.digidraw.util.FileHelper
 import com.lacolinares.digidraw.util.HandWrittenDigitView
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.NavResult
+import com.ramcosta.composedestinations.result.ResultRecipient
+import kotlinx.coroutines.launch
+import org.pytorch.LiteModuleLoader
+import org.pytorch.Module
 
-@Destination()
+@Destination
 @Composable
 fun QuizScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    resultRecipient: ResultRecipient<DigiModalDestination, Boolean>,
 ) {
+    val context = LocalContext.current
+    val viewModel: QuizViewModel = viewModel()
     var clearDrawing by remember { mutableStateOf(false) }
+    var submitAnswer by remember { mutableStateOf(false) }
+
+    val question = viewModel.activeQuestion.collectAsState()
+
+    val module = LiteModuleLoader.load(FileHelper.getVit4mnist(context))
+
+    resultRecipient.onNavResult { result ->
+        when (result) {
+            is NavResult.Canceled -> {}
+            is NavResult.Value -> {
+                module.destroy()
+                navigator.popBackStack()
+            }
+        }
+    }
 
     ScreenContainer {
         Header(
             onClose = {
+                module.destroy()
                 navigator.popBackStack()
             }
         )
         Instruction()
         DigiSpace(24)
-        Question("1 + 1 = ?")
+        Question(question.value)
         DigiSpace(32)
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp),
-            shape = RoundedCornerShape(16.dp),
-            backgroundColor = OuterSpace
-        ) {
-            AndroidView(
-                factory = {
-                    HandWrittenDigitView(it).apply {
-                        layoutParams = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.MATCH_PARENT
-                        )
-                    }
-                },
-                update = {
-                    if (clearDrawing){
-                        it.clearAllPointsAndRedraw()
-                        clearDrawing = false
-                    }
-                }
-            )
-        }
+        DrawingArea(
+            module = module,
+            clearDrawing = clearDrawing,
+            submitAnswer = submitAnswer,
+            navigator = navigator,
+            viewModel = viewModel,
+            onCleared = { clearDrawing = false },
+            onSubmitAnswer = { submitAnswer = false }
+        )
         DigiSpace(32)
         Footer(
-            onSubmit = {
-
-            },
-            onClear = {
-                clearDrawing = true
-            }
+            onSubmit = { submitAnswer = true },
+            onClear = { clearDrawing = true }
         )
     }
 }
@@ -85,7 +96,7 @@ private fun Footer(
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         DigiButton(
-            text = "Submit",
+            text = stringResource(R.string.submit_text),
             fontSize = 16.sp,
             minWidth = 40,
             verticalPadding = 8,
@@ -94,12 +105,75 @@ private fun Footer(
         )
 
         DigiButton(
-            text = "Clear",
+            text = stringResource(R.string.clear_text),
             fontSize = 16.sp,
             minWidth = 40,
             verticalPadding = 8,
             horizontalPadding = 20,
             onClick = onClear::invoke
+        )
+    }
+}
+
+@Composable
+private fun DrawingArea(
+    module: Module,
+    clearDrawing: Boolean,
+    submitAnswer: Boolean,
+    navigator: DestinationsNavigator,
+    viewModel: QuizViewModel,
+    onCleared: () -> Unit,
+    onSubmitAnswer: () -> Unit,
+) {
+    val context = LocalContext.current
+    val composableScope = rememberCoroutineScope()
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp),
+        shape = RoundedCornerShape(16.dp),
+        backgroundColor = OuterSpace
+    ) {
+        AndroidView(
+            factory = {
+                HandWrittenDigitView(it).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT
+                    )
+                }
+            },
+            update = {
+                if (clearDrawing) {
+                    it.clearAllPointsAndRedraw()
+                    onCleared.invoke()
+                }
+
+                if (submitAnswer) {
+                    composableScope.launch {
+                        viewModel.onSubmit(
+                            module = module,
+                            allPoints = it.getAllPoints(),
+                            drawViewWidth = it.width,
+                            drawViewHeight = it.height,
+                            onSubmitted = {
+                                it.clearAllPointsAndRedraw()
+                                onSubmitAnswer.invoke()
+                            },
+                            onFinish = { score, total ->
+                                it.clearAllPointsAndRedraw()
+                                onSubmitAnswer.invoke()
+                                navigator.navigate(
+                                    DigiModalDestination(
+                                        title = context.getString(R.string.game_over_text),
+                                        message = context.getString(R.string.your_score_text, score, total),
+                                    )
+                                )
+                            }
+                        )
+                    }
+                }
+            }
         )
     }
 }
@@ -128,7 +202,7 @@ private fun Question(
 @Composable
 private fun Instruction() {
     DigiText(
-        text = "draw the answer below the question.",
+        text = stringResource(R.string.instruction_text),
         modifier = Modifier.fillMaxWidth(),
         textAlign = TextAlign.Center
     )
@@ -144,7 +218,7 @@ private fun Header(
         horizontalArrangement = Arrangement.End
     ) {
         DigiText(
-            text = "X",
+            text = stringResource(R.string.cross_text),
             fontSize = 32.sp,
             modifier = Modifier
                 .padding(vertical = 16.dp)
