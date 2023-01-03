@@ -117,9 +117,32 @@ class QuizViewModel : ViewModel() {
     }
 
     private fun loadQuestions(): List<QuizModel> {
-        return (1..4).map {
+        val addition = (1..4).map {
             QuizModel(question = "$it + $it", correctAnswer = "${it + it}")
         }
+
+        val subtraction = listOf(
+            QuizModel(question = "5 - 4", correctAnswer = "1"),
+            QuizModel(question = "6 - 3", correctAnswer = "3"),
+            QuizModel(question = "8 - 3", correctAnswer = "5"),
+            QuizModel(question = "9 - 2", correctAnswer = "7"),
+        )
+
+        val multiplication = listOf(
+            QuizModel(question = "2 x 2", correctAnswer = "4"),
+            QuizModel(question = "4 x 2", correctAnswer = "8"),
+            QuizModel(question = "3 x 3", correctAnswer = "9"),
+            QuizModel(question = "8 x 0", correctAnswer = "0"),
+        )
+
+        val division = listOf(
+            QuizModel(question = "8 / 2", correctAnswer = "4"),
+            QuizModel(question = "4 / 2", correctAnswer = "2"),
+            QuizModel(question = "18 / 3", correctAnswer = "6"),
+        )
+
+
+        return (addition + subtraction + multiplication + division).shuffled()
     }
 
     companion object {
