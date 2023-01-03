@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -47,6 +48,7 @@ fun QuizScreen(
     var submitAnswer by remember { mutableStateOf(false) }
 
     val question = viewModel.activeQuestion.collectAsState()
+    val questionNumber = viewModel.questionNumber.collectAsState()
 
     val module = LiteModuleLoader.load(FileHelper.getVit4mnist(context))
 
@@ -62,6 +64,7 @@ fun QuizScreen(
 
     ScreenContainer {
         Header(
+            questionNumber = questionNumber.value,
             onClose = {
                 module.destroy()
                 navigator.popBackStack()
@@ -214,15 +217,24 @@ private fun Instruction() {
     )
 }
 
+@Preview(showBackground = true, backgroundColor = 0xFF455B56)
 @Composable
 private fun Header(
-    onClose: () -> Unit,
+    questionNumber: String = "",
+    onClose: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.End
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
+        DigiText(
+            text = questionNumber,
+            fontSize = 24.sp,
+            modifier = Modifier
+                .padding(vertical = 16.dp)
+        )
         DigiText(
             text = stringResource(R.string.cross_text),
             fontSize = 32.sp,

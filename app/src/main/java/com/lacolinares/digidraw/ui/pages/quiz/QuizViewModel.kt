@@ -16,6 +16,7 @@ class QuizViewModel : ViewModel() {
     private var questionPos = 0
     private var correctAnswerCount = 0
     val activeQuestion = MutableStateFlow("")
+    val questionNumber = MutableStateFlow("")
 
     init {
         updateQuestion()
@@ -108,9 +109,13 @@ class QuizViewModel : ViewModel() {
         correctAnswerCount = 0
         questionPos = 0
         activeQuestion.update { "" }
+        questionNumber.update { "" }
     }
 
     private fun updateQuestion() {
+        questionNumber.update {
+            "${questionPos + 1} / ${totalQuestions()}"
+        }
         activeQuestion.update {
             "${questions[questionPos].question} = ?"
         }
