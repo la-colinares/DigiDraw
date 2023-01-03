@@ -14,4 +14,5 @@
     <string name="cross_text">X</string>
     <string name="your_score_text">Your score:\n%1$d/%2$d</string>
     <string name="high_score_text">Highest score: %1$d</string>
+    <string name="no_history_text">No History found</string>
 </resources>

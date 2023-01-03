@@ -89,9 +89,12 @@ dependencies {
     implementation 'org.pytorch:pytorch_android_lite:1.10.0'
     implementation 'org.pytorch:pytorch_android_torchvision_lite:1.10.0'
 
-    //Prefs Data Store
+    // Prefs Data Store
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
-    //Kotlin Json Serialization
+    // Kotlin Json Serialization
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
+
+    // Compose ConstraintLayout
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 }

@@ -21,6 +21,7 @@ import com.lacolinares.digidraw.ui.components.DigiButton
 import com.lacolinares.digidraw.ui.components.DigiSpace
 import com.lacolinares.digidraw.ui.components.DigiText
 import com.lacolinares.digidraw.ui.destinations.DigiModalDestination
+import com.lacolinares.digidraw.ui.destinations.HistoryScreenDestination
 import com.lacolinares.digidraw.ui.destinations.QuizScreenDestination
 import com.lacolinares.digidraw.ui.pages.history.HistoryDataStore
 import com.lacolinares.digidraw.ui.theme.MineralGreen
@@ -84,6 +85,7 @@ fun MainScreen(
                     minWidth = buttonWidth,
                     verticalPadding = buttonVerticalPadding,
                     horizontalPadding = buttonHorizontalPadding,
+                    onClick = { navigator.navigate(HistoryScreenDestination) }
                 )
                 DigiButton(
                     text = stringResource(id = R.string.how_to_play_text),
