@@ -39,7 +39,10 @@ internal class MainScreenPreviewParam: PreviewParameterProvider<DestinationsNavi
 fun MainScreen(
     @PreviewParameter(MainScreenPreviewParam::class) navigator: DestinationsNavigator,
 ) {
-    val buttonWidth = 120
+    val buttonWidth = 220
+    val buttonVerticalPadding = 12
+    val buttonHorizontalPadding = 10
+    val buttonFontSize = 28.sp
     val context = LocalContext.current
     val historyDataStore = HistoryDataStore(context)
     val highestScore = historyDataStore.highestScore.collectAsState(initial = 0)
@@ -59,7 +62,7 @@ fun MainScreen(
             DigiSpace(height = 40)
             DigiText(
                 text = stringResource(id = R.string.high_score_text, highestScore.value),
-                fontSize = 18.sp
+                fontSize = 20.sp
             )
         }
         Box(
@@ -69,16 +72,25 @@ fun MainScreen(
             Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
                 DigiButton(
                     text = stringResource(id = R.string.start_text),
+                    fontSize = buttonFontSize,
                     minWidth = buttonWidth,
+                    verticalPadding = buttonVerticalPadding,
+                    horizontalPadding = buttonHorizontalPadding,
                     onClick = { navigator.navigate(QuizScreenDestination) }
                 )
                 DigiButton(
                     text = stringResource(id = R.string.history_text),
+                    fontSize = buttonFontSize,
                     minWidth = buttonWidth,
+                    verticalPadding = buttonVerticalPadding,
+                    horizontalPadding = buttonHorizontalPadding,
                 )
                 DigiButton(
                     text = stringResource(id = R.string.how_to_play_text),
+                    fontSize = buttonFontSize,
                     minWidth = buttonWidth,
+                    verticalPadding = buttonVerticalPadding,
+                    horizontalPadding = buttonHorizontalPadding,
                     onClick = {
                         navigator.navigate(
                             DigiModalDestination(
@@ -90,7 +102,10 @@ fun MainScreen(
                 )
                 DigiButton(
                     text = stringResource(id = R.string.about_text),
+                    fontSize = buttonFontSize,
                     minWidth = buttonWidth,
+                    verticalPadding = buttonVerticalPadding,
+                    horizontalPadding = buttonHorizontalPadding,
                     onClick = {
                         navigator.navigate(
                             DigiModalDestination(
